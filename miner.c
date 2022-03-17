@@ -9832,7 +9832,7 @@ static bool pool_active(struct pool *pool, bool pinging)
 		goto out;
 	}
 	
-		applog(LOG_INFO, "Testing pool %s", pool->rpc_url);
+	applog(LOG_INFO, "Testing pool %s", pool->rpc_url);
 
 	/* This is the central point we activate stratum when we can */
 	curl = curl_easy_init();
@@ -9867,11 +9867,10 @@ tryagain:
 	 * and if so, switch to that in preference to getwork if it works */
 	if (pool->stratum_url && want_stratum && pool_may_redirect_to(pool, pool->stratum_url) && (pool->has_stratum || stratum_works(pool))) {
 		if (!pool->has_stratum) {
-
-		applog(LOG_NOTICE, "Switching pool %d %s to %s", pool->pool_no, pool->rpc_url, pool->stratum_url);
-		if (!pool->rpc_url)
-			pool_set_uri(pool, strdup(pool->stratum_url));
-		pool->has_stratum = true;
+			applog(LOG_NOTICE, "Switching pool %d %s to %s", pool->pool_no, pool->rpc_url, pool->stratum_url);
+			if (!pool->rpc_url)
+				pool_set_uri(pool, strdup(pool->stratum_url));
+			pool->has_stratum = true;
 
 		}
 

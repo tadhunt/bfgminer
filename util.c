@@ -3110,8 +3110,8 @@ bool auth_stratum(struct pool *pool)
 	json_error_t err;
 	bool ret = false;
 
-	sprintf(s, "{\"id\": \"auth\", \"method\": \"mining.authorize\", \"params\": [\"%s\", \"%s\"]}",
-	        pool->rpc_user, pool->rpc_pass);
+	sprintf(s, "{\"id\": 9999, \"method\": \"mining.authorize\", \"params\": [\"%s\", \"%s\"]}",
+		pool->rpc_user, pool->rpc_pass);
 
 	if (!stratum_send(pool, s, strlen(s)))
 		goto out;
@@ -3135,6 +3135,14 @@ bool auth_stratum(struct pool *pool)
 				else
 				if (!strcmp(json_string_value(j_id), "xnsub"))
 					unknown = false;
+			}
+			else if (json_is_number(j_id))
+			{
+				int val;
+				val = json_integer_value(j_id);
+				if (val == 9999) {
+					break;
+				}
 			}
 			if (unknown)
 				applog(LOG_WARNING, "Pool %u: Unknown stratum msg: %s", pool->pool_no, sret);
