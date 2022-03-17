@@ -67,3 +67,8 @@ core*
 *.zip
 *.tbz2
 *.bz2
+
+ccan-upstream/ccan/opt/.dirstamp
+
+test-driver
+malgo/.dirstamp
